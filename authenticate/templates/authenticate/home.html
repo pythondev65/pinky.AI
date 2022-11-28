@@ -1,0 +1,594 @@
+{% extends 'authenticate/base.html' %}
+
+{% block content %}
+
+
+
+{% if user.is_authenticated %}
+<div id="successError" class="alert alert-success"  style="display:none"></div>
+<select id="selectMe"> 
+	<option value="Business">Pitch Ideas</option>
+	<option value="productcription">Product Desc</option>
+	<option value="jobdesc">Job Desc</option>
+	<option value="tweet">tweet</option>
+	<option value="email">Cold Email</option>
+	<option value="Videas">Video Ideas</option>
+	<option value="Videsc" >Video Desc</option>
+	<option value="genrateimg">Generate Image</option>
+	<option value="generateany" >Generate Anything </option>
+</select>
+  
+  
+  
+  <div class="group bg-light p-5 rounded mt-5" id="generateany" onload="pop_alert();">
+  
+	  <form class="" id="anythingsub" method="post">
+		
+		  <h1> 🖥️ Generate Anything 🖥️ ️</h1>
+		  <p class="lead">
+			You can generate anything from here. 😁      
+		  </p>
+	  
+		  <h2>Enter Something in the Format of "Generate Joke about Dogs"</h2>  
+		  <div class="input_box">
+			<label class="form-label">Title</label>
+			<input type="text" class="form-control" name="jobDescription" id="generateAnything" placeholder="eg. Project Manager">
+		</div>
+		  <div class="form-text">Enter the text ..</div>
+		
+  
+		<button type="submit" id="submitAnything" class="btn btn-primary btn-lg"> 💃 GET RECOMMENDATIONS</button>
+		<button type="button" id="tellmemore" class="btn btn-primary btn-lg" style="display:none">Tell Me More</button>
+		<button type="button" id="OpenModel" class="btn btn-primary btn-lg" data-toggle="modal" style="display:none" data-target="#exampleModalCenter">Save All </button>
+
+		 
+	  </form>
+	  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			  <input type="text" class="form-control" id="nameInputModel" placeholder="eg. Apple iPhone">
+	  
+			 
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  <button type="button" class="btn btn-primary" id="saveAnything">Save changes</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="p-3 rounded">
+		  <div class="row">
+			<div class="col-lg-12">
+			  <h3 class="text-primary">{{prompt | safe }}</h3>
+			  <div id="successError" class="alert alert-danger"  style="display:none"></div>
+  
+			  <p class="lead-anything" id="anything">{{openAIAnswer | safe }}</p>
+	  
+			 </div>
+			
+		  </div>
+	  </div>
+	
+  </div>
+  
+  
+  <div class="group bg-light p-5 rounded mt-5" id="Business" >
+	  <form class="" id="pitchesbusiness" method="post">
+		{% csrf_token %}
+		  <h1> 💼 Business Idea Pitch ‍💼 </h1>
+		  <p class="lead">
+		  Create some ideas for a quick one paragraph pitch for your business idea, describe your idea and produce useful pitches.
+		  </p>
+  
+		  <h2>Enter the business idea you have</h2>
+		  <div class="input_box">
+			<label class="form-label">Title of Business</label>
+			<input type="text" class="form-control" id="businessinput" name="businessPitch" placeholder="eg. AI Writting Tool">
+		  </div>
+		  <div class="form-text">Describe the business idea or title for the AI.</div>
+		  <button type="submit" class="btn btn-primary btn-lg" id="pitchbusiness"> 💃 GET RECOMMENDATIONS</button>
+		  <button type="button" id="tellmemorebussiness" class="btn btn-primary btn-lg" style="display:none">Tell Me More</button>
+		  <button type="button" id="OpenModelBussiness" class="btn btn-primary btn-lg" data-toggle="modal" style="display:none" data-target="#businesspitchidea">Save All </button>
+
+		 
+	  </form>
+	  <div class="modal fade" id="businesspitchidea" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			  <input type="text" class="form-control" id="nameInputModelbusiness" placeholder="eg. Apple iPhone">
+	  
+			 
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  <button type="button" class="btn btn-primary" id="savebusinesspitch">Save changes</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="p-3 rounded">
+		  <div class="row">
+			<div class="col-lg-12">
+			  <h3 class="text-primary">{{prompt}}</h3>
+			  <div id="successError" class="alert alert-danger"  style="display:none"></div>
+	  
+			  <p class="lead-business" id="businessidea">{{openAIAnswer}}</p>
+	  
+			 </div>
+		  </div>
+	  </div>
+  
+	  
+  </div>
+  <div class="group bg-light p-5 rounded mt-5" id="productcription">
+	  <form class="" id="productsub" >
+		  <h1>🛍️ Generate Product Descriptions 🛍 ️</h1>
+		  <p class="lead">
+			Generate product descriptions for any types of products, simply enter the name and productdescription to get started.
+		  </p>
+	  
+		  <h2>Enter the details of your product</h2>
+		  <div class="input_box">
+			<label class="form-label">Product Title</label>
+			<input type="text" class="form-control" id="product" name="productDescription" placeholder="eg. Apple iPhone">
+		  </div>
+		  <div class="form-text">Describe the business idea or title for the AI.</div>
+		  <button type="submit" class="btn btn-primary btn-lg" id="pitchbusiness"> 💃 GET RECOMMENDATIONS</button>
+		  <button type="button" id="tellmemoreProdsc" class="btn btn-primary btn-lg" style="display:none">Tell Me More</button>
+		  <button type="button" id="OpenModelProdsc" class="btn btn-primary btn-lg" data-toggle="modal" style="display:none" data-target="#Productdescti">Save All </button>
+
+		  
+	  </form>
+	  <div class="modal fade" id="Productdescti" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			  <input type="text" class="form-control" id="nameInputModelproductdesc" placeholder="eg. Apple iPhone">
+	  
+			 
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  <button type="button" class="btn btn-primary" id="saveproductdesc">Save changes</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="p-3 rounded">
+		  <div class="row">
+			<div class="col-lg-12">
+			  <h3 class="text-primary">{{prompt}}</h3>
+			  <div id="successError" class="alert alert-danger"  style="display:none"></div>
+	  
+			  <p class="result-lead" id="productDescription">{{openAIAnswer}}</p>
+	  
+			 </div>
+		  </div>
+	  </div>
+  </div>
+  
+  <div class="group bg-light p-5 rounded mt-5" id="jobdesc">
+  
+	  <form class="" id="jobdescri" >
+		  <h1> 🖥️ Generate Job Descriptions 🖥️ ️</h1>
+	  <p class="lead">
+		Are you trying to come up with professional sounding job descriptions but have hit a writers block? Let AI help you along.
+	  </p>
+  
+	  <h2>Enter the details of your job</h2>
+	  <div class="input_box">
+		<label class="form-label">Job Title</label>
+		<input type="text" class="form-control" name="jobDescription" id="jobDescription" placeholder="eg. Project Manager">
+	  </div>
+	  <div class="form-text">Enter the title of the Job you would like to receive a description for.</div>
+	  <button type="submit" id="submitjob" class="btn btn-primary btn-lg"> 💃 GET RECOMMENDATIONS</button>
+	  <button type="button" id="tellmemorejobdesc" class="btn btn-primary btn-lg" style="display:none">Tell Me More</button>
+	  <button type="button" id="OpenModelJobdsc" class="btn btn-primary btn-lg" data-toggle="modal" style="display:none" data-target="#jobDescri">Save All </button>
+	  
+	  </form>
+	  <div class="modal fade" id="jobDescri" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			  <input type="text" class="form-control" id="nameInputModeljobdesc" placeholder="eg. Apple iPhone">
+	  
+			 
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  <button type="button" class="btn btn-primary" id="savejobsdesc">Save changes</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="p-3 rounded">
+		  <div class="row">
+			  <div class="col-lg-12">
+				<h3 class="text-primary">{{prompt}}</h3>
+				<div id="successError" class="alert alert-danger"  style="display:none"></div>
+		
+				<p class="lead-job" id="jobdetail">{{openAIAnswer}}</p>
+		
+			  </div>
+			</div>
+	  </div>
+  
+  </div>
+  
+  <div class="group bg-light p-5 rounded mt-5" id="tweet">
+  
+	  <form class="" id="tweetideafor" >
+		  <h1>🐦 Generate Tweets 🐦 ️</h1>
+	  <p class="lead">
+		Start generating tweet ideas with hashtags for your online social media
+		campaigns on twitter. Create endless unique tweet ideas, no more writers
+		block.
+	  </p>
+  
+	  <h2>What is your tweet about?</h2>
+	  <div class="input_box">
+	  	<label class="form-label">Tweet Prompt</label>
+		<input
+			type="text"
+			class="form-control"
+			id="tweetIdeas"
+			name="tweetIdeas"
+			placeholder="eg. CRM Software"
+		  />
+	  </div>
+		  <div class="form-text">
+			Enter topic or subject you would like to generate tweets for.
+		  </div>
+	  <button type="submit" id="submitjob" class="btn btn-primary btn-lg"> 💃 GET RECOMMENDATIONS</button>
+	  <button type="button" id="tellmemorerweets" class="btn btn-primary btn-lg" style="display:none">Tell Me More</button>
+	  <button type="button" id="OpenModeltweet" class="btn btn-primary btn-lg" data-toggle="modal" style="display:none" data-target="#Tweetdetail">Save All </button>
+	  
+	  
+	  </form>
+	  <div class="modal fade" id="Tweetdetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			  <input type="text" class="form-control" id="nameInputModelTweet" placeholder="eg. Apple iPhone">
+	  
+			 
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  <button type="button" class="btn btn-primary" id="savetweetdetail">Save changes</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="p-3 rounded">
+		  <div class="row">
+			  <div class="col-lg-12">
+				<h3 class="text-primary">{{prompt}}</h3>
+				<div id="successError" class="alert alert-danger"  style="display:none"></div>
+		
+				<p class="lead-tweet" id="tweetidea">{{openAIAnswer}}</p>
+		
+			  </div>
+			</div>
+	  </div>
+  
+  </div>
+  
+  <div class="group bg-light p-5 rounded mt-5" id="email">
+	  <form class="" id="emailgenerate" >
+		  <h1>✉️ Cold Email Template ✉️ ️</h1>
+		  <p class="lead">
+		  This is perfect for marketing agents or companies who need fresh ideas
+		  daily on cold email content that is created by AI technology.
+		  </p>
+  
+		  <h2>Enter the services your company provides</h2>
+		  <div class="input_box">
+		  <label class="form-label">Services Provided</label>
+		  <input
+			type="text"
+			class="form-control"
+			name="coldEmails"
+			id="coldEmails"
+			placeholder="eg. CRM Cloud Software"
+		  />
+		  </div>
+		  <div class="form-text">
+			Describe the services you provide, for the email content.
+		  </div>
+	   
+  
+		<button type="submit" id="emailcold" class="btn btn-primary btn-lg">
+  
+		  💃 GET RECOMMENDATIONS
+		</button>
+		<button type="button" id="tellmemoremail" class="btn btn-primary btn-lg" style="display:none">Tell Me More</button>
+		<button type="button" id="OpenModelEmail" class="btn btn-primary btn-lg" data-toggle="modal" style="display:none" data-target="#emailcoldModel">Save All </button>
+
+  
+	  </form>
+	  <div class="modal fade" id="emailcoldModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			  <input type="text" class="form-control" id="nameInputcoldmail" placeholder="eg. Apple iPhone">
+	  
+			 
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  <button type="button" class="btn btn-primary" id="savecoldemail">Save changes</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="p-3 rounded">
+		  <div class="row">
+			  <div class="col-lg-12">
+				<h3 class="text-primary">{{prompt}}</h3>
+				<div id="successError" class="alert alert-danger"  style="display:none"></div>
+		
+				<p class="lead-cold" id="emailgenrate">{{openAIAnswer}}</p>
+		
+			  </div>
+			</div>
+	  </div>
+  
+  </div>
+  
+	
+  <div  id="Videas" class="group">
+	  <form class="" id="vidideass" method="post">
+		  <h1>📺 Youtube Video Ideas 📺</h1>
+		  <p class="lead">
+		  Want to get started on YouTube but need some Video Ideas to start working
+		  on? Start generating some YouTube Video Ideas right away with AI.
+		  </p>
+  
+		  <h2>Enter the topic you would like to discuss.</h2>
+		  <div class="input_box">
+		  <label class="form-label">Topic or Subject</label>
+			  <input
+			  type="text"
+			  class="form-control"
+			  name="videoIdeas"
+			  id="videoIdeas"
+			  placeholder="eg. Accounting Software"
+			  />
+		  </div>
+		  <div class="form-text">
+			Enter topic or subject to generate video ideas.
+		  </div>
+		
+  
+		<button type="submit" id="vidideas" class="btn btn-primary btn-lg">
+		  💃 GET RECOMMENDATIONS
+		</button>
+		<button type="button" id="tellmemorVidideas" class="btn btn-primary btn-lg" style="display:none">Tell Me More</button>
+		<button type="button" id="OpenModelVideoIdeas" class="btn btn-primary btn-lg" data-toggle="modal" style="display:none" data-target="#VidIdeasmodel">Save All </button>
+
+
+		<div class="modal fade" id="VidIdeasmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+				  <input type="text" class="form-control" id="nameInputModelVidIdeass" placeholder="eg. Apple iPhone">
+		  
+				 
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				  <button type="button" class="btn btn-primary" id="saveVideoIdeas">Save changes</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		<div class="p-3 rounded">
+			<div class="row">
+				<div class="col-lg-12">
+				  <h3 class="text-primary">{{prompt}}</h3>
+				  <div id="successError" class="alert alert-danger"  style="display:none"></div>
+		  
+				  <p class="v-idea" id="videodata">{{openAIAnswer}}</p>
+		  
+				</div>
+			  </div>
+		</div>
+	  </form>
+
+  
+  </div>
+  
+  <div id="Videsc" class="group">
+	  <form class="" id="viddescriptionn" method="post">
+		  <h1>⏩ Youtube Video Description ⏩</h1>
+		  <p class="lead">
+			This AI tool will help you draft some cool video descriptions based on a
+			topic or video idea. Just enter your video topic.
+		  </p>
+	  
+		  <h2>Enter the title of your video.</h2>
+		  <div class="input_box">
+		  <label class="form-label">Video Title</label>
+		  <input
+			type="text"
+			class="form-control"
+			name="videoDescription"
+			id="videoDescription"
+			placeholder="eg. Top 10 CRM Software"
+		  />
+		  </div>
+		  <div class="form-text">
+			Enter the video title, for the AI to generate a description.
+		  </div>
+	  
+  
+		<button type="submit" id="viddescrip" class="btn btn-primary btn-lg">
+		  💃 GET RECOMMENDATIONS
+		</button>
+		<button type="button" id="tellmemorViddesc" class="btn btn-primary btn-lg" style="display:none">Tell Me More</button>
+		<button type="button" id="OpenModelVideodesc" class="btn btn-primary btn-lg" data-toggle="modal" style="display:none" data-target="#VidDescmodel">Save All </button>
+
+  
+	  </form>
+	  <div class="modal fade" id="VidDescmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			  <input type="text" class="form-control" id="nameInputModelVideodesc" placeholder="eg. Apple iPhone">
+	  
+			 
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-primary" id="saveViddescc" >Save changes</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+	  <div class="p-3 rounded">
+		  <div class="row">
+			  <div class="col-lg-12">
+				<h3 class="text-primary">{{prompt}}</h3>
+				<div id="successError" class="alert alert-danger"  style="display:none"></div>
+		
+				<p class="v-desp" id="viddescription">{{openAIAnswer}}</p>
+		
+			  </div>
+			</div>
+	  </div>
+  
+  </div>
+  
+  <div id="genrateimg" class="group">
+	  <form class="" id="imagegenrate" method="post">
+		  <h1>🛍️ Generate Image 🛍 ️</h1>
+		  <p class="lead">
+			Generate Images  for any types of image, simply enter the name and Images to get started.
+		  </p>
+	  
+		  <h2>Enter the details of your Image</h2>
+		  <div class="input_box">
+		  <label class="form-label">Image Title</label>
+			 
+			  <input type="text" class="form-control" id="nameInput" placeholder="eg. Apple iPhone">
+		  </div>
+			  <label class="form-label">Enter Digit Max :9</label>
+			  <input type="text" class="form-control" id="digitinput" placeholder="Enter How much images You want">
+
+		  
+  
+		  <div class="form-text">
+			Enter the video title, for the AI to generate a description.
+		  </div>
+	  
+  
+		  <button type="submit" id="generateimage" class="btn btn-primary btn-lg"> 💃 GET RECOMMENDATIONS</button>
+		  <div class="p-3 rounded">
+			<div class="row">
+				<div class="col-lg-12">
+				  <h3 class="text-primary">{{prompt}}</h3>
+				  <div id="successError" class="alert alert-danger"  style="display:none"></div>
+				  <button type="button" id="download_all_button" class="btn btn-success  download_all_button" style="display:none" onclick="download_all()">Download All</button>
+				  <button type="button" id="download_all_selected" class="btn btn-success  download_all_button" style="display:none" onclick="download_all()">Download All Selected </button>
+
+				  <div id="successAlert" class="image">
+					
+				</div>
+			  </div>
+		</div>
+	  </form>
+	
+  
+
+	  
+  </div>
+  
+
+{% endif %}
+<script>
+	$(document).ready(function() {
+		var url = window.location.href;   
+		console.log("redirect===>",url)
+		var spl=url.split('?')[1]; 
+		if (spl != '' && spl != undefined){
+			$('#selectMe').val(spl)
+			$('.group').hide();
+			$('#'+spl).show();
+			$('#selectMe').change(function () {
+			$('.group').hide();
+			  $('#'+$(this).val()).show();
+			})
+			var uri = window.location.href.toString();
+			if (uri.indexOf("?") > 0) {
+				var clean_uri = uri.substring(0, uri.indexOf("?"));
+				window.history.replaceState({}, document.title, clean_uri);
+			}
+			$('#anything').html('');
+		
+		
+		}else{
+			$('.group').hide();
+			$('#Business').show();
+			$('#selectMe').change(function () {
+			$('.group').hide();
+			  $('#'+$(this).val()).show();
+			})
+
+		}
+	});
+</script>
+
+
+{% endblock %}

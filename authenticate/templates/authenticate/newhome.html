@@ -1,0 +1,108 @@
+{% extends 'authenticate/base.html' %}
+
+{% block content %}
+
+
+
+{% if user.is_authenticated %}
+
+<div class="newhome_power bg-light" style="border-radius:18px">
+	<div class="newhome_power_top">
+		<h1 class="top_title d-none">😼 Generate Anything power of Pinky 💥 ️</h1>
+		<div class="Generate_top_button">
+			<!-- <a href="{% url 'home' %}?genrateimg"><button type="button" class="btn lets_go" id="btnpinky">Generate
+					Images</button></a> -->
+			<a href="{% url 'dalle' %}"><button type="button" class="btn lets_go" id="redirectadmin">DALLE</button></a>
+
+			<a href="{% url 'indexpage' %}"><button type="button" class="btn lets_go"
+					id="redirectadmin">legacy</button></a>
+			<a href="https://beta.openai.com/docs/guides/completion/inserting-text"><button type="button"
+					class="btn lets_go" id="redirectadmin">Private Mode</button></a>
+
+			<!-- <a href='https://91bf768dcac4.ngrok.io/dalle/'><button type="button" class="btn lets_go"
+					id="redirectadmin">Pro mode</button></a> -->
+
+			<a href='/admin'><button type="button" class="btn lets_go" id="redirectadmin">Pinky
+					brain</button></a>
+
+			<!-- <a href="{% url 'home' %}?Business"><button type="button" class="btn btn-outline-success" id="btnpinky" >Home Page</button></a> -->
+
+		</div>
+	</div>
+	<!-- <p class="newhome_power_sub_text">
+		Generate anything 
+	</p> -->
+
+	<form id="newhome">
+		{% csrf_token %}
+		<div class="newhome_power_box">
+			<div class="form-group" onLoad="codeAddress()">
+				<div class="anything_pinky_label">
+					<label for="exampleInputEmail1"> Ask Anything to Pinky </label>
+				</div>
+				<textarea rows="4" cols="50" class="form-control mb-3" type="text" id="inputcontent"
+					placeholder="Default input">
+					</textarea>
+				<select id="drop_down" class="ddl">
+				</select>
+			</div>
+
+			<div class="terms">
+				<p>Press Enter To Send</p> <input type="checkbox" id="takenBefore" placeholder="Yes">
+			</div>
+			<div class="newhome_power_box_button">
+				<div class="newhome_power_top_box">
+					<button type="button" class="btn lets_go" id="restart" onclick="resetForm()">Restart</button>
+
+					<button type="submit" class="btn lets_go" id="new_home_btn">Let's go</button>
+					<button type="button" id="tellmemoremail_newhome" class="btn btn-primary btn-lg"
+						style="display:none">Tell Me More</button>
+				</div>
+
+
+
+			</div>
+		</div>
+	</form>
+
+	<div class="modal fade" id="newhomesave" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input type="text" class="form-control" id="nameInputnewhome" placeholder="eg. Apple iPhone">
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="savenewhomedetail">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="datadisplay">
+
+	</div>
+	<div class="datadisplay_button">
+		<button type="button" id="OpenModelnewdownload" class="btn btn-success btn" data-toggle="modal"
+			data-target="#newhomedownload" style="display:none">Download All</button>
+		<button type="button" id="OpenModelnewhome" class="btn btn-dark btn" data-toggle="modal"
+			data-target="#newhomesave">Save</button>
+	</div>
+</div>
+
+
+{% endif %}
+
+<script>
+
+	codeAddress();
+</script>
+{% endblock %}

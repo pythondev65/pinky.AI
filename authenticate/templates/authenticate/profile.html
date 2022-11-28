@@ -1,0 +1,384 @@
+{% extends 'authenticate/base.html' %}
+
+{% block content %}
+
+
+
+{% if user.is_authenticated %}
+
+<div class="profile">
+
+  <div class="profile_header">
+    <div class="profile_img">
+
+      <img src="/static/media/icon.png" id="logo">
+    </div>
+    <div class="blank_section">
+      <h1>Your saved and updated data</h1>
+    </div>
+  
+    <div class="user_name">
+      <h1 id="username">{{user}}</h1>
+    </div>
+  </div>
+
+  <div class="details">
+    <h1>Choice :</h1>
+
+    <select id="selectMeprofile" class="custom-select" onchange="fetchany(this.value)">
+      <option value="allsaved">All Saved data</option> 
+      <option value="productcription">Product Desc</option>
+      <option value="jobdesc">Job Desc</option>
+      <option value="tweet">tweet</option>
+      <option value="email">Cold Email</option>
+      <option value="generateany">Generate Anything</option>
+      <option value="Videas">Video Ideas</option>
+      <option value="Videsc" >Video Desc</option>
+      <option value="genrateimg">Generate Image</option>
+      <option value="pitchideass" >Pitch Ideas </option>
+      <option value="newhome" >New Ideas </option> 
+      
+
+
+    </select>
+
+
+    <!-- <div class="profilemodel" id="Business" style="display:none;">
+      Hey business
+    </div> -->
+    <!-- Button trigger modal -->
+    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      Launch demo modal
+    </button> -->
+
+    <!-- Modal -->
+
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="profilemodel" id="generateany">
+        {% csrf_token %}
+        <div class="search_field">
+          <div class="form-group">
+            <input type="search" class="form-control" id="exampleFormgenerateany" placeholder="Search...">
+          </div>
+        </div>
+        <div class="pitch_ideas_table_wrp">
+          <table class="table table-striped" id="myTable">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Query</th>
+                <th scope="col">Data</th>
+              </tr>
+            </thead>
+            <tbody id="anythingfetch"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="profilemodel" id="productcription" style="display:none;">
+        <div class="search_field">
+          <div class="form-group">
+            <input type="search" class="form-control" id="Productdetail" placeholder="Search...">
+          </div>
+        </div>
+        <div class="pitch_ideas_table_wrp">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Query</th>
+                <th scope="col">Data</th>
+              </tr>
+            </thead>
+            <tbody id="fetchprodsc">
+            
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="profilemodel" id="jobdesc" style="display:snone;">
+        <div class="search_field">
+          <div class="form-group">
+            <input type="search" class="form-control" id="exampleFormjobdesc" placeholder="Search...">
+          </div>
+        </div>
+        <div class="pitch_ideas_table_wrp">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Query</th>
+                <th scope="col">Data</th>
+              </tr>
+            </thead>
+            <tbody id="jobdescri">
+            
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="profilemodel" id="tweet" style="display: none;">
+        <div class="search_field">
+          <div class="form-group">
+            <input type="search" class="form-control" id="exampleFortweet"  placeholder="Search...">
+          </div>
+        </div>
+        <div class="pitch_ideas_table_wrp">
+          <table class="table table-striped" id="searemail">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Query</th>
+                <th scope="col">Data</th>
+              </tr>
+            </thead>
+            <tbody id="tweetfetch">
+             
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="profilemodel" id="email" style="display: none;">
+        <div class="search_field">
+          <div class="form-group">
+            <input type="search" class="form-control" id="emailcoldsearch" placeholder="Search...">
+          </div>
+        </div>
+        <div class="pitch_ideas_table_wrp">
+          <table class="table table-striped" id="searemail">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Query</th>
+                <th scope="col">Data</th>
+              </tr>
+            </thead>
+            <tbody id="emailfetch">
+             
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="profilemodel" id="pitchideass" style="display:none;">
+        <div class="search_field">
+          <div class="form-group">
+            <input type="search" class="form-control" id="pithchideasearch"  placeholder="Search...">
+          </div>
+        </div>
+        <div class="pitch_ideas_table_wrp">
+          <table class="table table-striped" id="searchpitch">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Query</th>
+                <th scope="col">Data</th>
+              </tr>
+            </thead>
+            <tbody id="businesspitchfetch">
+             
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="profilemodel" id="Videsc" style="display: none;">
+        <div class="search_field">
+          <div class="form-group">
+            <input type="search" class="form-control" id="videodescsearch" onkeyup="searchvidedesc()" placeholder="Search...">
+          </div>
+        </div>
+        <div class="pitch_ideas_table_wrp">
+          <table class="table table-striped" id="searemail">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Query</th>
+                <th scope="col">Data</th>
+              </tr>
+            </thead>
+            <tbody id="fetchvidedesc">
+             
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="profilemodel" id="Videas" style="display: none;">
+        <div class="search_field">
+          <div class="form-group">
+            <input type="search" class="form-control" id="videoideassearch" onkeyup="searchpitch(this.value)" placeholder="Search...">
+          </div>
+        </div>
+        <div class="pitch_ideas_table_wrp">
+          <table class="table table-striped" id="searemail">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Query</th>
+                <th scope="col">Data</th>
+              </tr>
+            </thead>
+            <tbody id="fetchvidideass">
+             
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="profilemodel" id="newhome" style="display: none;">
+        <div class="search_field">
+          <div class="form-group">
+            <input type="search" class="form-control" id="newhomesearch"  placeholder="Search...">
+          </div>
+        </div>
+        <div class="pitch_ideas_table_wrp">
+          <table class="table table-striped" id="searchpitch">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Query</th>
+                <th scope="col">Data</th>
+              </tr>
+            </thead>
+            <tbody id="newhomedata">
+             
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="profilemodel" id="allsaved" style="display:none">
+        <div class="search_field">
+          <div class="form-group">
+            <input type="search" class="form-control" id="searchallsaveddata"  placeholder="Search...">
+          </div>
+        </div>
+        <div class="pitch_ideas_table_wrp">
+          <table class="table table-striped" id="">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Query</th>
+                <th scope="col">Data</th>
+                <th scope="col">category</th>
+
+              </tr>
+            </thead>
+            <tbody id="fetchalldata">
+             
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+{% endif %}
+<script>
+ 
+  // anything
+  $("#exampleFormgenerateany").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+   
+    $("#anythingfetch tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
+  //Productdetail
+  $("#Productdetail").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    console.log(value)
+    $("#fetchprodsc tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
+  //exampleFormjobdesc
+  $("#exampleFormjobdesc").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    console.log(value)
+    $("#jobdescri tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
+  //exampleFortweet
+  $("#exampleFortweet").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    console.log(value)
+    $("#tweetfetch tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
+  //emailcoldsearch
+
+  $("#emailcoldsearch").on("keyup", function() {
+    var selectBoxValue = $("#selectMeprofile").val();
+    var value = $(this).val().toLowerCase();
+    $("#emailfetch tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
+//pitchideassearch
+
+$("#pithchideasearch").on("keyup", function() {
+  var value = $(this).val().toLowerCase();
+  console.log(value)
+  $("#businesspitchfetch tr").filter(function() {
+    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+  });
+});
+
+//videodescsearch
+
+$("#videodescsearch").on("keyup", function() {
+  var value = $(this).val().toLowerCase();
+  console.log(value)
+  $("#fetchvidedesc tr").filter(function() {
+    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+  });
+});
+
+//videoideassearch
+$("#videoideassearch").on("keyup", function() {
+  var value = $(this).val().toLowerCase();
+  console.log(value)
+  $("#fetchvidideass tr").filter(function() {
+    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+  });
+});
+
+$("#newhomesearch").on("keyup", function() {
+  var value = $(this).val().toLowerCase();
+  console.log(value)
+  $("#newhomedata tr").filter(function() {
+    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+  });
+});
+
+$("#searchallsaveddata").on("keyup", function() {
+  var value = $(this).val().toLowerCase();
+  console.log(value)
+  $("#fetchalldata tr").filter(function() {
+    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+  });
+});
+
+
+  fetchany();
+</script>
+{% endblock %}

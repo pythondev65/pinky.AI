@@ -1,0 +1,32 @@
+{% extends 'authenticate/base.html' %}
+
+{% block content %}
+
+
+
+{% if user.is_authenticated %}
+<div id="successError" class="alert alert-danger"  style="display:none" style="height:60px;"></div>
+
+<div id="box">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <form  id="dalleform" method="POST">
+                {% csrf_token %}
+                <div class="top-bar">
+                    <input type="text" name="text" id="text" class="form-control">
+                    <button type="submit" class="btn lets_go" id="new_home_btn">Let's go</button>
+                    
+
+                </div>
+                <div id="dalleImage">
+                  
+                </div>
+                </form>
+                <button type="button" class="btn lets_go" id="save_dalle_images" onclick="download_all_dalle()">Save Images</button>
+        </div>
+    </div>
+<div>
+{% endif %}
+
+
+{% endblock %}
